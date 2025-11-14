@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BookReaderApp.TranslationPage"
+             Title="Перевод">
+
+  <Grid RowDefinitions="Auto,*">
+
+    <!-- Верхняя панель -->
+    <Grid Grid.Row="0" Padding="10" BackgroundColor="LightBlue">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+      <Button Grid.Column="0" Text="← Назад" BackgroundColor="Transparent" 
+                    Clicked="OnBackClicked"/>
+      <Label Grid.Column="1" Text="Перевод книги" FontSize="18" 
+                   FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center"/>
+    </Grid>
+
+    <!-- Содержимое -->
+    <ScrollView Grid.Row="1">
+      <VerticalStackLayout Padding="20" Spacing="20">
+
+        <!-- Выбор языка для перевода -->
+        <VerticalStackLayout x:Name="LanguageSelectionContainer" Spacing="15">
+          <Label Text="Выберите язык для перевода:" FontSize="16" FontAttributes="Bold"/>
+
+          <!-- Список языков -->
+          <VerticalStackLayout Spacing="10">
+            <Frame BorderColor="Gray" Padding="15" HasShadow="False">
+              <Grid>
+                <Label Text="English" VerticalOptions="Center"/>
+                <CheckBox HorizontalOptions="End"/>
+              </Grid>
+            </Frame>
+
+            <Frame BorderColor="Gray" Padding="15" HasShadow="False">
+              <Grid>
+                <Label Text="Français" VerticalOptions="Center"/>
+                <CheckBox HorizontalOptions="End"/>
+              </Grid>
+            </Frame>
+
+            <Frame BorderColor="Gray" Padding="15" HasShadow="False">
+              <Grid>
+                <Label Text="Deutsch" VerticalOptions="Center"/>
+                <CheckBox HorizontalOptions="End"/>
+              </Grid>
+            </Frame>
+
+            <Frame BorderColor="Gray" Padding="15" HasShadow="False">
+              <Grid>
+                <Label Text="Español" VerticalOptions="Center"/>
+                <CheckBox HorizontalOptions="End"/>
+              </Grid>
+            </Frame>
+          </VerticalStackLayout>
+
+          <Button Text="Перевести" BackgroundColor="Blue" TextColor="White" 
+                            Clicked="OnTranslateClicked"/>
+        </VerticalStackLayout>
+
+        <!-- Прогресс перевода (скрыт по умолчанию) -->
+        <VerticalStackLayout x:Name="ProgressContainer" IsVisible="False" Spacing="15">
+          <Label x:Name="TranslationInfoLabel" 
+                           Text="Сейчас переводится книга: [Название книги]" 
+                           FontAttributes="Bold" HorizontalOptions="Center"/>
+          <Label x:Name="LanguageLabel" Text="На язык: English" 
+                           HorizontalOptions="Center"/>
+
+          <ProgressBar x:Name="TranslationProgress" Progress="0" 
+                                 ProgressColor="Green"/>
+          <Label x:Name="ProgressLabel" Text="0%" 
+                           HorizontalOptions="Center" FontSize="18" FontAttributes="Bold"/>
+
+          <Label Text="После того, как книга будет переведена, мы вам сообщим" 
+                           HorizontalOptions="Center" TextColor="Gray" FontSize="14"/>
+        </VerticalStackLayout>
+
+      </VerticalStackLayout>
+    </ScrollView>
+
+  </Grid>
+</ContentPage>

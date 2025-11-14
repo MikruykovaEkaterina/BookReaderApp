@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BookReaderApp.SettingsPage"
+             Title="Настройки">
+
+  <Grid RowDefinitions="Auto,*">
+
+    <!-- Верхняя панель -->
+    <Grid Grid.Row="0" Padding="10" BackgroundColor="LightBlue">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="Auto"/>
+      </Grid.ColumnDefinitions>
+      <Button Grid.Column="0" Text="← Назад" BackgroundColor="Transparent" 
+                    Clicked="OnBackClicked"/>
+      <Label Grid.Column="1" Text="Настройки интерфейса" FontSize="18" 
+                   FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center"/>
+      <Button Grid.Column="2" Text="🏠 Главная" BackgroundColor="Transparent" 
+                    Clicked="OnHomeClicked"/>
+    </Grid>
+
+    <!-- Параметры настроек -->
+    <ScrollView Grid.Row="1">
+      <VerticalStackLayout Padding="20" Spacing="25">
+
+        <!-- Тема интерфейса -->
+        <Frame BorderColor="Gray" Padding="15" HasShadow="True" CornerRadius="10">
+          <VerticalStackLayout Spacing="10">
+            <Label Text="Тема интерфейса" FontSize="16" FontAttributes="Bold"/>
+            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+              <Button Grid.Column="0" Text="&lt;" 
+                                    Clicked="OnThemePreviousClicked"/>
+              <Label Grid.Column="1" x:Name="ThemeLabel" Text="Светлая" 
+                                   HorizontalOptions="Center" VerticalOptions="Center" 
+                                   FontSize="16"/>
+              <Button Grid.Column="2" Text="&gt;" 
+                                    Clicked="OnThemeNextClicked"/>
+            </Grid>
+          </VerticalStackLayout>
+        </Frame>
+
+        <!-- Размер текста -->
+        <Frame BorderColor="Gray" Padding="15" HasShadow="True" CornerRadius="10">
+          <VerticalStackLayout Spacing="10">
+            <Label Text="Размер текста интерфейса" FontSize="16" FontAttributes="Bold"/>
+            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+              <Button Grid.Column="0" Text="&lt;" x:Name="DecreaseButton" 
+                                    Clicked="OnDecreaseFontClicked"/>
+              <Label Grid.Column="1" x:Name="FontSizeLabel" Text="Средний (14)" 
+                                   HorizontalOptions="Center" VerticalOptions="Center" 
+                                   FontSize="16"/>
+              <Button Grid.Column="2" Text="&gt;" x:Name="IncreaseButton" 
+                                    Clicked="OnIncreaseFontClicked"/>
+            </Grid>
+          </VerticalStackLayout>
+        </Frame>
+
+        <!-- Язык интерфейса -->
+        <Frame BorderColor="Gray" Padding="15" HasShadow="True" CornerRadius="10">
+          <VerticalStackLayout Spacing="10">
+            <Label Text="Язык интерфейса" FontSize="16" FontAttributes="Bold"/>
+            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+              <Button Grid.Column="0" Text="&lt;" 
+                                    Clicked="OnLanguagePreviousClicked"/>
+              <Label Grid.Column="1" x:Name="LanguageLabel" Text="Русский" 
+                                   HorizontalOptions="Center" VerticalOptions="Center" 
+                                   FontSize="16"/>
+              <Button Grid.Column="2" Text="&gt;" 
+                                    Clicked="OnLanguageNextClicked"/>
+            </Grid>
+          </VerticalStackLayout>
+        </Frame>
+
+      </VerticalStackLayout>
+    </ScrollView>
+
+  </Grid>
+</ContentPage>

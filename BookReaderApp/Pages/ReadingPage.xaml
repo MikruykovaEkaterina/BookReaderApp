@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BookReaderApp.ReadingPage"
+             Title="Чтение">
+
+  <Grid RowDefinitions="Auto,*">
+
+    <!-- Верхняя панель навигации -->
+    <Grid Grid.Row="0" Padding="5" BackgroundColor="LightGray">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="Auto"/>
+      </Grid.ColumnDefinitions>
+
+      <Button Grid.Column="0" Text="🏠" BackgroundColor="Transparent" 
+                    Clicked="OnHomeClicked" ToolTipProperties.Text="Главный экран"/>
+      <Button Grid.Column="1" Text="←" BackgroundColor="Transparent" 
+                    Clicked="OnBackClicked" ToolTipProperties.Text="Назад"/>
+      <Button Grid.Column="2" Text="📑" BackgroundColor="Transparent" 
+                    Clicked="OnContentsClicked" ToolTipProperties.Text="Оглавление"/>
+      <Button Grid.Column="3" Text="🔤" BackgroundColor="Transparent" 
+                    Clicked="OnTextSettingsClicked" ToolTipProperties.Text="Настройки текста"/>
+      <Button Grid.Column="4" Text="⚙️" BackgroundColor="Transparent" 
+                    Clicked="OnSettingsClicked" ToolTipProperties.Text="Настройки"/>
+      <Button Grid.Column="5" Text="📝" BackgroundColor="Transparent" 
+                    Clicked="OnNotesClicked" ToolTipProperties.Text="Заметки"/>
+    </Grid>
+
+    <!-- Область чтения -->
+    <Grid Grid.Row="1">
+
+      <!-- Текст книги -->
+      <ScrollView x:Name="BookScrollView">
+        <VerticalStackLayout Padding="20">
+          <Label x:Name="BookContentLabel" FontSize="16" LineHeight="1.5">
+            <Label.FormattedText>
+              <FormattedString>
+                <Span Text="Глава 1. Начало" FontSize="22" FontAttributes="Bold"/>
+                <Span Text="&#10;&#10;"/>
+                <Span Text="Это начало книги. Здесь располагается текст первой главы. "/>
+                <Span Text="Пользователь может читать текст, листать страницы вверх и вниз. &#10;&#10;"/>
+                <Span Text="При длительном нажатии на предложение будет показан перевод этого предложения. "/>
+                <Span Text="Также пользователь может добавлять заметки к тексту. &#10;&#10;"/>
+                <Span Text="Продолжение текста книги... Здесь может быть много текста, который пользователь будет читать. "/>
+                <Span Text="Текст можно настраивать: менять размер шрифта, цвет фона и текста, отступы и выравнивание. &#10;&#10;"/>
+                <Span Text="Глава продолжается дальше, и пользователь может листать страницы. "/>
+                <Span Text="Можно перейти к другой главе через оглавление. &#10;&#10;"/>
+                <Span Text="Это демонстрационный текст для показа функциональности экрана чтения. "/>
+              </FormattedString>
+            </Label.FormattedText>
+          </Label>
+        </VerticalStackLayout>
+      </ScrollView>
+
+      <!-- Панель оглавления (скрыта по умолчанию, слева) -->
+      <Frame x:Name="ContentsPanel" IsVisible="False" 
+                   HorizontalOptions="Start" VerticalOptions="Fill"
+                   WidthRequest="250" BackgroundColor="White" 
+                   BorderColor="Gray" Padding="10">
+        <VerticalStackLayout Spacing="10">
+          <Label Text="Оглавление" FontSize="18" FontAttributes="Bold"/>
+          <ScrollView>
+            <VerticalStackLayout Spacing="5">
+              <Button Text="Глава 1. Начало" 
+                                    BackgroundColor="LightBlue" TextColor="Black" 
+                                    HorizontalOptions="Fill" Clicked="OnChapterClicked"/>
+              <Button Text="Глава 2. Развитие" 
+                                    BackgroundColor="Transparent" TextColor="Black" 
+                                    HorizontalOptions="Fill" Clicked="OnChapterClicked"/>
+              <Button Text="Глава 3. Кульминация" 
+                                    BackgroundColor="Transparent" TextColor="Black" 
+                                    HorizontalOptions="Fill" Clicked="OnChapterClicked"/>
+              <Button Text="Глава 4. Развязка" 
+                                    BackgroundColor="Transparent" TextColor="Black" 
+                                    HorizontalOptions="Fill" Clicked="OnChapterClicked"/>
+              <Button Text="Эпилог" 
+                                    BackgroundColor="Transparent" TextColor="Black" 
+                                    HorizontalOptions="Fill" Clicked="OnChapterClicked"/>
+            </VerticalStackLayout>
+          </ScrollView>
+        </VerticalStackLayout>
+      </Frame>
+
+      <!-- Панель настроек текста (всплывающее окно) -->
+      <Frame x:Name="TextSettingsPanel" IsVisible="False"
+                   HorizontalOptions="Center" VerticalOptions="Center"
+                   WidthRequest="300" BackgroundColor="White" 
+                   BorderColor="Gray" Padding="15" HasShadow="True">
+        <VerticalStackLayout Spacing="15">
+          <Label Text="Настройки текста" FontSize="18" FontAttributes="Bold"/>
+
+          <Button Text="Размер текста" Clicked="OnFontSizeClicked"/>
+          <Button Text="Цвет фона" Clicked="OnBackgroundColorClicked"/>
+          <Button Text="Цвет текста" Clicked="OnTextColorClicked"/>
+          <Button Text="Размер полей" Clicked="OnMarginsClicked"/>
+          <Button Text="Выравнивание" Clicked="OnAlignmentClicked"/>
+          <Button Text="Ориентация листания" Clicked="OnOrientationClicked"/>
+
+          <Label Text="Язык перевода:"/>
+          <Picker>
+            <Picker.Items>
+              <x:String>English</x:String>
+              <x:String>Français</x:String>
+              <x:String>Deutsch</x:String>
+            </Picker.Items>
+          </Picker>
+
+          <Button Text="Закрыть" BackgroundColor="LightGray" 
+                            Clicked="OnCloseTextSettingsClicked"/>
+        </VerticalStackLayout>
+      </Frame>
+
+      <!-- Панель заметок (всплывающее окно сверху) -->
+      <Frame x:Name="NotesPanel" IsVisible="False"
+                   VerticalOptions="Start" HeightRequest="300"
+                   BackgroundColor="White" BorderColor="Gray" 
+                   Padding="15" Margin="10">
+        <VerticalStackLayout Spacing="10">
+          <Grid ColumnDefinitions="*,Auto">
+            <Label Grid.Column="0" Text="Заметки" FontSize="18" FontAttributes="Bold"/>
+            <Button Grid.Column="1" Text="✕" BackgroundColor="Transparent" 
+                                Clicked="OnCloseNotesClicked"/>
+          </Grid>
+
+          <Button Text="+ Добавить заметку" BackgroundColor="LightGreen" 
+                            Clicked="OnAddNoteClicked"/>
+
+          <ScrollView>
+            <VerticalStackLayout Spacing="10">
+              <Frame BorderColor="Gray" Padding="10">
+                <VerticalStackLayout Spacing="5">
+                  <Label Text="Заметка 1" FontAttributes="Bold"/>
+                  <Label Text="Интересный момент в книге..." 
+                                           TextColor="Gray" FontSize="14"/>
+                  <Button Text="▼" BackgroundColor="Transparent" 
+                                            HorizontalOptions="End"/>
+                </VerticalStackLayout>
+              </Frame>
+
+              <Frame BorderColor="Gray" Padding="10">
+                <VerticalStackLayout Spacing="5">
+                  <Label Text="Заметка 2" FontAttributes="Bold"/>
+                  <Label Text="Важная цитата..." 
+                                           TextColor="Gray" FontSize="14"/>
+                  <Button Text="▼" BackgroundColor="Transparent" 
+                                            HorizontalOptions="End"/>
+                </VerticalStackLayout>
+              </Frame>
+            </VerticalStackLayout>
+          </ScrollView>
+        </VerticalStackLayout>
+      </Frame>
+
+    </Grid>
+
+  </Grid>
+</ContentPage>

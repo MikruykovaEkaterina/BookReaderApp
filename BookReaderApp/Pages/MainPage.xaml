@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="BookReaderApp.MainPage">
+
+  <Grid RowDefinitions="Auto,*">
+    <!-- Верхняя навигационная панель -->
+    <Grid Grid.Row="0" Padding="10" BackgroundColor="Purple">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="Auto"/>
+      </Grid.ColumnDefinitions>
+      <Label Grid.Column="0" Text="Макеты" FontSize="22" FontAttributes="Bold" TextColor="Black" VerticalOptions="Center"/>
+      <Button Grid.Column="1" Text="🔍" BackgroundColor="Transparent" Clicked="OnSearchClicked"/>
+      <Button Grid.Column="2" Text="📥" BackgroundColor="Transparent" Clicked="OnUploadClicked"/>
+      <Button Grid.Column="3" Text="⚙️" BackgroundColor="Transparent" Clicked="OnSettingsClicked"/>
+    </Grid>
+
+    <!-- ОДИН ScrollView для ВСЕХ элементов -->
+    <ScrollView Grid.Row="1">
+      <VerticalStackLayout Padding="0" Spacing="15">
+
+        <!-- Кнопка показа фильтра -->
+        <Button Text="Показать фильтры" Margin="15,10,15,0"
+                BackgroundColor="LightGray" TextColor="Black"
+                Clicked="OnFilterButtonClicked"/>
+
+        <!-- Фильтр (Expander) БЕЗ внутреннего ScrollView! -->
+        <toolkit:Expander x:Name="SearchExpander" IsExpanded="False">
+          <VerticalStackLayout Padding="15" Spacing="15">
+
+            <!-- Название -->
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+              <Label Grid.Column="0" Text="Название:" VerticalOptions="Center"/>
+              <Entry Grid.Column="1" Placeholder="Введите название"/>
+            </Grid>
+            <!-- Автор -->
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+              <Label Grid.Column="0" Text="Автор:" VerticalOptions="Center"/>
+              <Entry Grid.Column="1" Placeholder="Введите автора"/>
+            </Grid>
+            <!-- Язык -->
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+              <Label Grid.Column="0" Text="Язык:" VerticalOptions="Center"/>
+              <Picker Grid.Column="1" Title="Выберите язык">
+                <Picker.Items>
+                  <x:String>Русский</x:String>
+                  <x:String>English</x:String>
+                  <x:String>Français</x:String>
+                  <x:String>Deutsch</x:String>
+                </Picker.Items>
+              </Picker>
+            </Grid>
+            <!-- Размер книги -->
+            <VerticalStackLayout Spacing="5">
+              <Label Text="Размер книги (в страницах):" FontAttributes="Bold"/>
+              <Grid ColumnDefinitions="*,Auto,*" ColumnSpacing="10">
+                <Entry Grid.Column="0" Placeholder="от" Keyboard="Numeric"/>
+                <Label Grid.Column="1" Text="—" VerticalOptions="Center"/>
+                <Entry Grid.Column="2" Placeholder="до" Keyboard="Numeric"/>
+              </Grid>
+              <Label Text="" TextColor="Red" x:Name="PageErrorLabel"/>
+            </VerticalStackLayout>
+            <!-- Статус -->
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+              <Label Grid.Column="0" Text="Статус:" VerticalOptions="Center"/>
+              <Picker Grid.Column="1" Title="Не задано">
+                <Picker.Items>
+                  <x:String>Не задано</x:String>
+                  <x:String>Новое</x:String>
+                  <x:String>В процессе</x:String>
+                  <x:String>Прочитано</x:String>
+                </Picker.Items>
+              </Picker>
+            </Grid>
+            <!-- Реакция -->
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+              <Label Grid.Column="0" Text="Реакция:" VerticalOptions="Center"/>
+              <Picker Grid.Column="1" Title="Не задано">
+                <Picker.Items>
+                  <x:String>Не задано</x:String>
+                  <x:String>Любимое</x:String>
+                  <x:String>Не оценено</x:String>
+                </Picker.Items>
+              </Picker>
+            </Grid>
+            <!-- Сортировка -->
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+              <Label Grid.Column="0" Text="Сортировка:" VerticalOptions="Center"/>
+              <Picker Grid.Column="1" SelectedIndex="0">
+                <Picker.Items>
+                  <x:String>По названию (А-Я)</x:String>
+                  <x:String>По названию (Я-А)</x:String>
+                  <x:String>По дате (новые)</x:String>
+                  <x:String>По дате (старые)</x:String>
+                  <x:String>По размеру (больше)</x:String>
+                  <x:String>По размеру (меньше)</x:String>
+                </Picker.Items>
+              </Picker>
+            </Grid>
+            <!-- Кнопка сброса -->
+            <Button Text="Сбросить поиск" BackgroundColor="LightGray" 
+                        TextColor="Black" Clicked="OnResetClicked"/>
+            <!-- Кнопка поиска -->
+            <Button Text="Показать результаты" Margin="0,10,0,0"
+                        BackgroundColor="Blue" TextColor="White"
+                        Clicked="OnShowResultsClicked"/>
+
+          </VerticalStackLayout>
+        </toolkit:Expander>
+
+        <!-- Список книг -->
+        <VerticalStackLayout Padding="10" Spacing="15">
+          <!-- Карточка книги 1 -->
+          <Frame BorderColor="Gray" HasShadow="True" CornerRadius="10" Padding="15">
+            <Grid RowDefinitions="Auto,Auto,200,Auto,Auto,Auto,Auto,Auto,Auto">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+              </Grid.ColumnDefinitions>
+              <Label Grid.Row="0" Grid.Column="0" Text="Название книги" FontSize="18" FontAttributes="Bold"/>
+              <Button Grid.Row="0" Grid.Column="1" Text="⋮" BackgroundColor="Transparent"/>
+              <Frame Grid.Row="2" Grid.ColumnSpan="2" BackgroundColor="LightGray" CornerRadius="5" Margin="0,10">
+                <Label Text="Обложка" HorizontalOptions="Center" VerticalOptions="Center" FontSize="20" TextColor="Gray"/>
+              </Frame>
+              <Label Grid.Row="3" Grid.ColumnSpan="2" Text="Автор: Имя Автора" Margin="0,5"/>
+              <Label Grid.Row="4" Grid.ColumnSpan="2" Text="Кол-во страниц: 300" Margin="0,2"/>
+              <Grid Grid.Row="5" Grid.ColumnSpan="2" Margin="0,5">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*"/>
+                  <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <ProgressBar Grid.Column="0" Progress="0.45" ProgressColor="Blue" VerticalOptions="Center"/>
+                <Label Grid.Column="1" Text="45%" Margin="10,0,0,0"/>
+              </Grid>
+              <Label Grid.Row="6" Grid.ColumnSpan="2" Text="Дата добавления: 01.11.2025" Margin="0,2"/>
+              <Label Grid.Row="7" Grid.ColumnSpan="2" Text="Последнее открытие: 05.11.2025" Margin="0,2"/>
+              <Label Grid.Row="8" Grid.ColumnSpan="2" Text="Язык: Русский" Margin="0,2"/>
+            </Grid>
+          </Frame>
+
+          <!-- Карточка книги 2 -->
+          <Frame BorderColor="Gray" HasShadow="True" CornerRadius="10" Padding="15">
+            <Grid RowDefinitions="Auto,Auto,200,Auto,Auto,Auto,Auto,Auto">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+              </Grid.ColumnDefinitions>
+              <Label Grid.Row="0" Grid.Column="0" Text="Другая книга" FontSize="18" FontAttributes="Bold"/>
+              <Button Grid.Row="0" Grid.Column="1" Text="⋮" BackgroundColor="Transparent"/>
+              <Frame Grid.Row="2" Grid.ColumnSpan="2" BackgroundColor="LightGray" CornerRadius="5" Margin="0,10">
+                <Label Text="Обложка" HorizontalOptions="Center" VerticalOptions="Center" FontSize="20" TextColor="Gray"/>
+              </Frame>
+              <Label Grid.Row="3" Grid.ColumnSpan="2" Text="Автор: Другой Автор" Margin="0,5"/>
+              <Label Grid.Row="4" Grid.ColumnSpan="2" Text="Кол-во страниц: 450" Margin="0,2"/>
+              <Grid Grid.Row="5" Grid.ColumnSpan="2" Margin="0,5">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*"/>
+                  <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <ProgressBar Grid.Column="0" Progress="0.0" ProgressColor="Blue" VerticalOptions="Center"/>
+                <Label Grid.Column="1" Text="0%" Margin="10,0,0,0"/>
+              </Grid>
+              <Label Grid.Row="6" Grid.ColumnSpan="2" Text="Дата добавления: 03.11.2025" Margin="0,2"/>
+              <Label Grid.Row="7" Grid.ColumnSpan="2" Text="Язык: English" Margin="0,2"/>
+            </Grid>
+          </Frame>
+
+        </VerticalStackLayout>
+
+        <!-- Кнопка "Наверх" -->
+        <Button Text="↑ Наверх" Margin="10" BackgroundColor="LightBlue"/>
+
+      </VerticalStackLayout>
+    </ScrollView>
+  </Grid>
+</ContentPage>

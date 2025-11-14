@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BookReaderApp.UploadPage"
+             Title="Загрузка">
+
+  <Grid RowDefinitions="Auto,*">
+
+    <!-- Верхняя панель -->
+    <Grid Grid.Row="0" Padding="10" BackgroundColor="LightBlue">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+      <Button Grid.Column="0" Text="← Назад" BackgroundColor="Transparent" 
+                    Clicked="OnBackClicked"/>
+      <Label Grid.Column="1" Text="Загрузка книги" FontSize="18" 
+                   FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center"/>
+    </Grid>
+
+    <!-- Содержимое -->
+    <VerticalStackLayout Grid.Row="1" Padding="20" Spacing="20" 
+                           VerticalOptions="Center">
+
+      <!-- Выбор языка -->
+      <VerticalStackLayout Spacing="10">
+        <Label Text="Язык для загрузки:" FontSize="16" FontAttributes="Bold"/>
+        <Picker x:Name="LanguagePicker" Title="Выберите язык" 
+                        SelectedIndexChanged="OnLanguageSelected">
+          <Picker.Items>
+            <x:String>Русский</x:String>
+            <x:String>English</x:String>
+            <x:String>Français</x:String>
+            <x:String>Deutsch</x:String>
+          </Picker.Items>
+        </Picker>
+      </VerticalStackLayout>
+
+      <!-- Кнопка загрузки -->
+      <Button x:Name="UploadButton" Text="Загрузить" 
+                    BackgroundColor="Blue" TextColor="White" 
+                    IsEnabled="False" Clicked="OnUploadClicked"/>
+
+      <!-- Прогресс (скрыт по умолчанию) -->
+      <VerticalStackLayout x:Name="ProgressContainer" IsVisible="False" Spacing="10">
+        <Label Text="Сейчас загружается книга на язык: Русский" 
+                       HorizontalOptions="Center"/>
+        <ProgressBar x:Name="UploadProgress" Progress="0" 
+                             ProgressColor="Blue"/>
+        <Label x:Name="ProgressLabel" Text="0%" 
+                       HorizontalOptions="Center" FontSize="16"/>
+        <Label Text="После того, как книга будет загружена, мы вам сообщим" 
+                       HorizontalOptions="Center" TextColor="Gray" FontSize="14"/>
+      </VerticalStackLayout>
+
+    </VerticalStackLayout>
+
+  </Grid>
+</ContentPage>

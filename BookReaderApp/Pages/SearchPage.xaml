@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BookReaderApp.SearchPage"
+             Title="Поиск">
+
+  <Grid RowDefinitions="Auto,*,Auto">
+
+    <!-- Верхняя панель -->
+    <Grid Grid.Row="0" Padding="10" BackgroundColor="LightBlue">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+      <Button Grid.Column="0" Text="← Назад" BackgroundColor="Transparent" 
+                    Clicked="OnBackClicked"/>
+      <Label Grid.Column="1" Text="Поиск и фильтрация" FontSize="18" 
+                   FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center"/>
+    </Grid>
+
+    <!-- Параметры поиска -->
+    <ScrollView Grid.Row="1">
+      <VerticalStackLayout Padding="15" Spacing="15">
+
+        <!-- Название -->
+        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+          <Label Grid.Column="0" Text="Название:" VerticalOptions="Center"/>
+          <Entry Grid.Column="1" Placeholder="Введите название"/>
+        </Grid>
+
+        <!-- Автор -->
+        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+          <Label Grid.Column="0" Text="Автор:" VerticalOptions="Center"/>
+          <Entry Grid.Column="1" Placeholder="Введите автора"/>
+        </Grid>
+
+        <!-- Язык -->
+        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+          <Label Grid.Column="0" Text="Язык:" VerticalOptions="Center"/>
+          <Picker Grid.Column="1" Title="Выберите язык">
+            <Picker.Items>
+              <x:String>Русский</x:String>
+              <x:String>English</x:String>
+              <x:String>Français</x:String>
+              <x:String>Deutsch</x:String>
+            </Picker.Items>
+          </Picker>
+        </Grid>
+
+        <!-- Размер книги -->
+        <VerticalStackLayout Spacing="5">
+          <Label Text="Размер книги (в страницах):" FontAttributes="Bold"/>
+          <Grid ColumnDefinitions="*,Auto,*" ColumnSpacing="10">
+            <Entry Grid.Column="0" Placeholder="от" Keyboard="Numeric"/>
+            <Label Grid.Column="1" Text="—" VerticalOptions="Center"/>
+            <Entry Grid.Column="2" Placeholder="до" Keyboard="Numeric"/>
+          </Grid>
+          <Label Text="" TextColor="Red" x:Name="PageErrorLabel"/>
+        </VerticalStackLayout>
+
+        <!-- Статус -->
+        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+          <Label Grid.Column="0" Text="Статус:" VerticalOptions="Center"/>
+          <Picker Grid.Column="1" Title="Не задано">
+            <Picker.Items>
+              <x:String>Не задано</x:String>
+              <x:String>Новое</x:String>
+              <x:String>В процессе</x:String>
+              <x:String>Прочитано</x:String>
+            </Picker.Items>
+          </Picker>
+        </Grid>
+
+        <!-- Реакция -->
+        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+          <Label Grid.Column="0" Text="Реакция:" VerticalOptions="Center"/>
+          <Picker Grid.Column="1" Title="Не задано">
+            <Picker.Items>
+              <x:String>Не задано</x:String>
+              <x:String>Любимое</x:String>
+              <x:String>Не оценено</x:String>
+            </Picker.Items>
+          </Picker>
+        </Grid>
+
+        <!-- Сортировка -->
+        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+          <Label Grid.Column="0" Text="Сортировка:" VerticalOptions="Center"/>
+          <Picker Grid.Column="1" SelectedIndex="0">
+            <Picker.Items>
+              <x:String>По названию (А-Я)</x:String>
+              <x:String>По названию (Я-А)</x:String>
+              <x:String>По дате (новые)</x:String>
+              <x:String>По дате (старые)</x:String>
+              <x:String>По размеру (больше)</x:String>
+              <x:String>По размеру (меньше)</x:String>
+            </Picker.Items>
+          </Picker>
+        </Grid>
+
+        <!-- Кнопка сброса -->
+        <Button Text="Сбросить поиск" BackgroundColor="LightGray" 
+                        TextColor="Black" Clicked="OnResetClicked"/>
+
+      </VerticalStackLayout>
+    </ScrollView>
+
+    <!-- Кнопка поиска -->
+    <Button Grid.Row="2" Text="Показать результаты" Margin="15" 
+                BackgroundColor="Blue" TextColor="White" 
+                Clicked="OnShowResultsClicked"/>
+
+  </Grid>
+</ContentPage>
